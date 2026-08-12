@@ -38,3 +38,7 @@ cmake --build stm32/build -j"$(nproc)"
 ## Commit style
 
 Prefer short, imperative subjects that explain *why* (e.g. “Fix NRF CE GPIO init on L432”). Group unrelated changes into separate commits or PRs.
+
+## Repository monitoring
+
+Watch the Actions and Security tabs for CI failures and Dependabot alerts.
