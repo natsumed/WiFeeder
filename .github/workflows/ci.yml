@@ -1,0 +1,66 @@
+name: CI
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  host:
+    name: host
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            build-essential cmake pkg-config \
+            libgtest-dev
+
+      - name: Configure
+        run: |
+          cmake -S raspberry -B raspberry/build-ci \
+            -DRASPBERRY_PI=OFF \
+            -DWIFEEDER_BUILD_TESTS=ON \
+            -DWIFEEDER_USE_MOSQUITTO=OFF \
+            -DWIFEEDER_USE_JSONCPP=OFF
+
+      - name: Build
+        run: cmake --build raspberry/build-ci -j"$(nproc)"
+
+      - name: Test
+        run: |
+          if [[ -x raspberry/build-ci/test_diet ]]; then
+            ctest --test-dir raspberry/build-ci --output-on-failure
+          else
+            echo "test_diet not built (GTest missing); host binary build is the gate"
+            test -x raspberry/build-ci/wifeeder_host
+          fi
+
+  stm32:
+    name: stm32
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install ARM GCC toolchain
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            cmake build-essential \
+            gcc-arm-none-eabi binutils-arm-none-eabi
+
+      - name: Configure
+        run: |
+          cmake -S stm32 -B stm32/build-ci \
+            -DCMAKE_TOOLCHAIN_FILE="${GITHUB_WORKSPACE}/cmake/toolchain-arm-none-eabi.cmake"
+
+      - name: Build
+        run: cmake --build stm32/build-ci -j"$(nproc)"

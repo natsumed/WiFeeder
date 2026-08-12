@@ -1,0 +1,9 @@
+# Default owner for everything in this repository
+* @natsumed
+
+# Domain areas (same owner today; split later if the team grows)
+/stm32/ @natsumed
+/raspberry/ @natsumed
+/pcb/ @natsumed
+/wiring/ @natsumed
+/.github/ @natsumed

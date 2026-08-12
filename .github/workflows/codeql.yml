@@ -1,0 +1,49 @@
+name: CodeQL
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+  schedule:
+    - cron: "27 4 * * 1"
+
+jobs:
+  analyze:
+    name: analyze
+    runs-on: ubuntu-22.04
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+    strategy:
+      fail-fast: false
+      matrix:
+        language: [c-cpp]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: ${{ matrix.language }}
+
+      - name: Install build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            build-essential cmake pkg-config \
+            gcc-arm-none-eabi binutils-arm-none-eabi
+
+      - name: Build host (CodeQL traced)
+        run: |
+          cmake -S raspberry -B raspberry/build-codeql \
+            -DRASPBERRY_PI=OFF \
+            -DWIFEEDER_BUILD_TESTS=OFF \
+            -DWIFEEDER_USE_MOSQUITTO=OFF \
+            -DWIFEEDER_USE_JSONCPP=OFF
+          cmake --build raspberry/build-codeql -j"$(nproc)"
+      - name: Perform CodeQL analysis
+        uses: github/codeql-action/analyze@v3
+        with:
+          category: "/language:${{ matrix.language }}"

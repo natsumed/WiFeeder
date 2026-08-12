@@ -1,0 +1,45 @@
+name: Hardware issue
+description: Bench bring-up, wiring, PCB, or RF hardware problem
+title: "[hardware] "
+labels: ["hardware"]
+body:
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+    validations:
+      required: true
+  - type: dropdown
+    id: subsystem
+    attributes:
+      label: Subsystem
+      options:
+        - Power / bucks
+        - NRF24L01+ (STM or Pi)
+        - PCA9685 / motors / IBT
+        - Encoders
+        - RFID
+        - HX711 / load cell
+        - PCB fab / assembly
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: setup
+    attributes:
+      label: Hardware setup
+      description: Modules used, VCC rails (NRF must be 3.3 V), connectors, PCB revision
+    validations:
+      required: true
+  - type: textarea
+    id: observations
+    attributes:
+      label: Observations
+      description: What you measured or saw (SPI OK but no RF, motor silent, etc.)
+    validations:
+      required: true
+  - type: textarea
+    id: refs
+    attributes:
+      label: Related docs
+      description: Links to HARDWARE.md, wiring pack, ERC/DRC notes
