@@ -1,0 +1,27 @@
+flowchart TB
+  subgraph keep [Port_from_v1]
+    diet[diet.cpp]
+    animal[animal_weight_tool]
+    db[database_to_SQLite]
+    mqtt[mqtt_client]
+    main[main_threads]
+    wife[wifeeder.c_loop]
+    rfid[rfid_134khz_parser]
+    hx[hx711_math]
+    crc[Common_crc8]
+  end
+  subgraph replace [Replace]
+    walink[walink_SocketCAN]
+    nrf[nrf_link]
+    gtk[gtk08_GPIO_motor]
+    ibt[IBT2_PWM_motor]
+    walink --> nrf
+    gtk --> ibt
+  end
+  subgraph drop [Drop]
+    can[can.cpp_can_intf]
+    framing[walink_START_END]
+    l486[L486_CubeMX_pins]
+  end
+  keep --> nrf
+  keep --> ibt

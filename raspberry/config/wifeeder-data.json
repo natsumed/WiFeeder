@@ -1,0 +1,109 @@
+{
+	"animal": {
+		"19946219": {
+			"rfid": 19946219,
+			"feedtime_lasteff": 0,
+			"weight": 650.0,
+			"diet": {
+				"diet_id": 2,
+				"target": [
+					{
+						"feed_id": 0,
+						"start": "07:00:00",
+						"end": "19:00:00",
+						"inter": 3600,
+						"d_max": 5000,
+						"d_qty": 3000,
+						"p_max": 500,
+						"density": 480
+					},
+					{
+						"feed_id": 1,
+						"start": "07:00:00",
+						"end": "19:00:00",
+						"inter": 3600,
+						"d_max": 1000,
+						"d_qty": 500,
+						"p_max": 200,
+						"density": 480
+					}
+				],
+				"cons": [
+					{
+						"feed_id": 0,
+						"ts": 1,
+						"d_eff": 0,
+						"p_qty": 0,
+						"p_eff": 0,
+						"missed": 0
+					},
+					{
+						"feed_id": 1,
+						"ts": 1,
+						"d_eff": 0,
+						"p_qty": 0,
+						"p_eff": 0,
+						"missed": 0
+					}
+				]
+			}
+		}
+	},
+	"diet": {
+		"0": {
+			"diet_id": 0,
+			"target": [
+				{
+					"feed_id": 0,
+					"start": "00:01:00",
+					"end": "23:59:00",
+					"inter": 0,
+					"d_max": 0,
+					"d_qty": 0,
+					"p_max": 0,
+					"density": 1
+				}
+			]
+		},
+		"1": {
+			"diet_id": 1,
+			"target": [
+				{
+					"feed_id": 0,
+					"start": "00:01:00",
+					"end": "23:59:00",
+					"inter": 0,
+					"d_max": 4294967295,
+					"d_qty": 4294967295,
+					"p_max": 480,
+					"density": 480
+				}
+			]
+		},
+		"2": {
+			"diet_id": 2,
+			"target": [
+				{
+					"feed_id": 0,
+					"start": "07:00:00",
+					"end": "19:00:00",
+					"inter": 3600,
+					"d_max": 5000,
+					"d_qty": 3000,
+					"p_max": 500,
+					"density": 480
+				},
+				{
+					"feed_id": 1,
+					"start": "07:00:00",
+					"end": "19:00:00",
+					"inter": 3600,
+					"d_max": 1000,
+					"d_qty": 500,
+					"p_max": 200,
+					"density": 480
+				}
+			]
+		}
+	}
+}

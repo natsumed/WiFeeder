@@ -1,0 +1,12 @@
+flowchart LR
+  subgraph cloud [AgproCloud]
+    MQTT[MQTT_Broker]
+  end
+  subgraph pi [RaspberryPi]
+    Host[diet_sqlite_mqtt_nrf_link]
+    Host --> MQTT
+  end
+  subgraph stm [NUCLEO_L432KC]
+    Act[FreeRTOS_wifeeder]
+  end
+  Host <-->|"NRF24_32B"| Act

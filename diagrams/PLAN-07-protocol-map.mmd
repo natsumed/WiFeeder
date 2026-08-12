@@ -1,0 +1,29 @@
+flowchart LR
+  subgraph v1can [v1_CAN_T_eMsgType]
+    S0[Status_0]
+    A1[Ack_1]
+    F2[FeedReq_2]
+    F3[FeedCmd_3]
+    F4[FeedFdbk_4]
+    F5[FeedRsp_5]
+    W6[WeightInd_6]
+    W7[WeightRsp_7]
+  end
+  subgraph v2nrf [v2_NRF_MsgType]
+    N1[STATUS_0x01]
+    N7[ACK_0x07]
+    N2[RFID_TAG_0x02]
+    N3[FEED_CMD_0x03]
+    N4[FEED_DONE_0x04]
+    N5[WEIGHT_0x05]
+    N6[CONFIG_0x06]
+    N8[ERROR_0x08]
+  end
+  S0 --> N1
+  A1 --> N7
+  F2 --> N2
+  F3 --> N3
+  F4 --> N4
+  F5 --> N7
+  W6 --> N5
+  W7 --> N7

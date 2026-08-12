@@ -1,0 +1,16 @@
+graph LR
+    subgraph Connectors["Connectors Kit"]
+        C1["JST-XH 2.54mm<br/>Power connectors"]
+        C2["Dupont Male-Female<br/>Signal wires"]
+        C3["Screw Terminals<br/>Motor power"]
+        C4["Barrel Jack<br/>12V input"]
+        C5["Pin Headers<br/>Breakout"]
+        C6["Heat Shrink<br/>Insulation"]
+    end
+
+    C1 -->|"For Mini360 and IBT-2"| Use
+    C2 -->|"For signal connections"| Use
+    C3 -->|"For motor wires (12V/2A)"| Use
+    C4 -->|"For 12V power input"| Use
+    C5 -->|"For breadboard prototyping"| Use
+    C6 -->|"For wire insulation"| Use

@@ -1,0 +1,20 @@
+sequenceDiagram
+    participant App as Application
+    participant Proto as Protocol Layer
+    participant NRF as NRF24L01+ HW
+
+    App->>Proto: Send(message)
+    Proto->>Proto: Pack (dest, src, type, seq, payload)
+    Proto->>Proto: Calculate CRC-8
+    Proto->>NRF: Write 32-byte packet to TX FIFO
+    NRF->>NRF: Transmit + wait for auto-ACK
+
+    alt ACK received
+        NRF-->>Proto: TX_SUCCESS
+        Proto-->>App: Success
+    else No ACK (max retries)
+        NRF-->>Proto: MAX_RT (max retry reached)
+        Proto->>NRF: FLUSH_TX
+        Proto->>Proto: Retry at application level
+        Proto->>NRF: Re-send packet
+    end

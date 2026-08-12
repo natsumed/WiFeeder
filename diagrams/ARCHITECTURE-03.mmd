@@ -1,0 +1,29 @@
+sequenceDiagram
+    participant Cow as  Cow
+    participant RFID as RFID Reader
+    participant STM32 as STM32 MCU
+    participant NRF_S as NRF24L01 (STM)
+    participant NRF_P as NRF24L01 (RPi)
+    participant RPi as Raspberry Pi
+    participant DB as SQLite DB
+    participant MQTT as Agpro Cloud
+
+    Cow->>RFID: Approaches feeder
+    RFID->>STM32: Tag detected (125kHz)
+    STM32->>NRF_S: Send RFID_TAG (msg ID=0x02)
+    NRF_S->>NRF_P: 2.4GHz packet
+    NRF_P->>RPi: RFID_TAG received
+    RPi->>DB: Lookup animal (RFID)
+    DB->>RPi: Diet data found
+    RPi->>RPi: Calculate portion
+    RPi->>NRF_P: Send FEED_CMD (msg ID=0x03)
+    NRF_P->>NRF_S: 2.4GHz packet
+    NRF_S->>STM32: FEED_CMD received
+    STM32->>STM32: Start motors + encoders
+    Note over STM32: Dispensing feed...
+    STM32->>NRF_S: Send FEED_DONE (msg ID=0x04)
+    NRF_S->>NRF_P: 2.4GHz packet
+    NRF_P->>RPi: FEED_DONE received
+    RPi->>DB: Update consumption
+    RPi->>MQTT: Publish feed event
+    MQTT->>RPi: Acknowledge

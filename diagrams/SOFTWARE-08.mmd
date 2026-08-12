@@ -1,0 +1,14 @@
+stateDiagram-v2
+    [*] --> NORMAL: System booted
+
+    NORMAL --> WARNING: Connectivity issues
+    NORMAL --> ERROR: Hardware fault
+
+    WARNING --> NORMAL: Issue resolved
+    WARNING --> ERROR: Issue persists > threshold
+
+    ERROR --> RECOVERY: Attempt auto-recovery
+    RECOVERY --> NORMAL: Recovery successful
+    RECOVERY --> FATAL: Recovery failed 3x
+
+    FATAL --> [*]: System reset / maintenance

@@ -1,0 +1,16 @@
+flowchart TD
+    START["NRF not communicating"] --> A{"SPI device present?"}
+    A -->|"Yes"| B{"Wiring correct?"}
+    A -->|"No"| FIX1["Enable SPI in raspi-config<br/>Check /dev/spidev0.0"]
+    B -->|"Yes"| C{"Power 3.3V?"}
+    B -->|"No"| FIX2["Check wiring:<br/>MOSI, MISO, SCK, CSN, CE"]
+    C -->|"Yes"| D{"NRF responds<br/>to SPI?"}
+    C -->|"No"| FIX3["3.3V rail may be overloaded.<br/>Check power supply."]
+    D -->|"Yes"| E{"Same channel<br/>on both?"}
+    D -->|"No"| FIX4["NRF module may be damaged.<br/>Replace."]
+    E -->|"Yes"| F{"Same address<br/>on both?"}
+    E -->|"No"| FIX5["Set RF_CH=76 on both sides"]
+    F -->|"Yes"| G{"Auto-ACK working?"}
+    F -->|"No"| FIX6["Set TX_ADDR on STM32 =<br/>RX_ADDR_P0 on RPi"]
+    G -->|"Yes"| OK[" Communication OK"]
+    G -->|"No"| FIX7["Enable EN_AA, check<br/>SETUP_RETR settings"]

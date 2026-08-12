@@ -1,0 +1,14 @@
+graph LR
+    subgraph Motor1Enc["Motor 1 Encoder"]
+        E1A["Encoder A"] -->|"PA0"| T2C1["TIM2_CH1"]
+        E1B["Encoder B"] -->|"PA1"| T2C2["TIM2_CH2"]
+        E1V["VCC"] -->|"5V"| IBT5V["IBT-2 5V OUT"]
+        E1G["GND"] -->|"GND"| GND["Common Ground"]
+    end
+
+    subgraph Motor2Enc["Motor 2 Encoder Phase3b"]
+        E2A["Encoder A"] -->|"PA11"| SoftA["GPIO_EXTI"]
+        E2B["Encoder B"] -->|"PA12"| SoftB["GPIO_EXTI"]
+        E2V["VCC"] -->|"5V"| IBT5V
+        E2G["GND"] -->|"GND"| GND
+    end

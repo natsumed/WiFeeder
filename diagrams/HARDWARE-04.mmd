@@ -1,0 +1,16 @@
+graph LR
+    subgraph PCA["PCA9685"]
+        PWM0["PWM0"]
+        PWM1["PWM1"]
+    end
+
+    subgraph IBT["IBT-2 BTS7960 Motor1"]
+        RPWM["RPWM"]
+        LPWM["LPWM"]
+        REN["R_EN → 3V3"]
+        LEN["L_EN → 3V3"]
+        MOUT["M+ / M- → GX-2 → Motor"]
+    end
+
+    PWM0 --> RPWM
+    PWM1 --> LPWM

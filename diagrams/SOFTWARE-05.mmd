@@ -1,0 +1,55 @@
+classDiagram
+    class Nrf24l01 {
+        -int spi_fd
+        -int ce_pin
+        -int irq_pin
+        +init() bool
+        +send(uint8_t* data, size_t len) bool
+        +receive(uint8_t* data, size_t* len) bool
+        +dataAvailable() bool
+        -spiTransfer(uint8_t* tx, uint8_t* rx, size_t len) void
+    }
+
+    class Protocol {
+        +sendStatus(uint32_t heartbeat) bool
+        +sendRfid(uint32_t tagId) bool
+        +sendFeedCmd(FeedCmd cmd) bool
+        +receive(Message* msg) bool
+        -pack(Message* msg, uint8_t* buf) void
+        -unpack(uint8_t* buf, Message* msg) bool
+        -crc8(uint8_t* data, size_t len) uint8_t
+    }
+
+    class DietEngine {
+        +calcPortion(uint32_t rfid) FeedCmd
+        +updateConsumption(uint32_t rfid, uint16_t actual)
+        +getDailyStatus(uint32_t rfid) DietStatus
+        -getTargetDailyQty(uint32_t rfid) double
+        -getCurrentConsumption(uint32_t rfid) double
+        -getRemainingPortions(uint32_t rfid) uint32_t
+    }
+
+    class Database {
+        -sqlite3* db
+        -std::mutex mtx
+        +open() bool
+        +getAnimal(uint32_t rfid) Animal
+        +updateConsumption(uint32_t rfid, uint16_t qty) bool
+        +getWeight(uint32_t rfid) double
+        +storeWeight(uint32_t rfid, double weight) bool
+        +getAllActiveRfids() vector~uint32_t~
+    }
+
+    class MqttClient {
+        -mosquitto* mqtt
+        +connect() bool
+        +publishFeed(uint32_t rfid, uint16_t actual) bool
+        +publishWeight(uint32_t rfid, double grams) bool
+        +subscribe(string topic) bool
+        -onMessage(string topic, string payload) void
+    }
+
+    Protocol --> Nrf24l01 : uses
+    DietEngine --> Database : queries
+    DietEngine --> Protocol : sends FEED_CMD
+    MqttClient --> Database : reads/writes

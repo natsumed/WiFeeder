@@ -1,0 +1,21 @@
+sequenceDiagram
+    participant STM32 as STM32
+    participant RPi as RPi
+
+    Note over STM32,RPi: Test 1: Basic TX/RX
+    STM32->>RPi: STATUS (heartbeat=1)
+    RPi->>RPi: Validate CRC
+    RPi->>STM32: ACK
+    STM32->>STM32: Verify ACK received
+
+    Note over STM32,RPi: Test 2: Large payload
+    STM32->>RPi: STATUS (with max data)
+    RPi->>RPi: Validate all bytes
+    RPi->>STM32: ACK
+
+    Note over STM32,RPi: Test 3: 1000 packets
+    loop 1000 times
+        STM32->>RPi: STATUS (heartbeat=N)
+        RPi->>STM32: ACK
+    end
+    Note over STM32,RPi: Verify: < 1% packet loss

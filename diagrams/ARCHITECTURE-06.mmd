@@ -1,0 +1,15 @@
+graph TB
+    BAT[" 12V Battery<br/>or Adapter"] -->|"12V DC"| IBT["IBT-2 Motor Driver<br/>(5-27V tolerant)"]
+    BAT -->|"12V DC"| MINI["Mini360 DC-DC<br/>Buck Converter"]
+    MINI -->|"3.3V / 3A"| STM32["NUCLEO-L432KC<br/>(3.3V)"]
+    MINI -->|"3.3V / 3A"| NRF["NRF24L01+ Module<br/>(3.3V max)"]
+    MINI -->|"3.3V / 3A"| RFID_READER["RFID Reader<br/>(3.3V/5V)"]
+    IBT -->|"12V PWM"| MOTOR1["Motor 1<br/>DC Brushed"]
+    IBT -->|"12V PWM"| MOTOR2["Motor 2<br/>DC Brushed"]
+    IBT -->|"5V out"| ENCODER["Encoder<br/>Power"]
+    STM32 -->|"5V USB"| USB["USB Debug<br/>Serial Console"]
+
+    style BAT fill:#fce4ec,stroke:#880e4f
+    style MINI fill:#e8eaf6,stroke:#283593
+    style IBT fill:#fff3e0,stroke:#e65100
+    style STM32 fill:#e8f5e9,stroke:#1b5e20

@@ -1,0 +1,18 @@
+sequenceDiagram
+  participant RFID as RFID_Reader
+  participant STM as WifeederTask
+  participant Radio as RadioTask_NRF
+  participant Pi as nrf_link
+  participant Diet as diet_engine
+  participant Cloud as MQTT
+  RFID->>STM: tag
+  STM->>Radio: RFID_TAG
+  Radio->>Pi: packet_32B
+  Pi->>Diet: get_portion
+  Diet->>Pi: mrevs_crevs
+  Pi->>Radio: FEED_CMD
+  Radio->>STM: revs
+  STM->>STM: motor_encoder
+  STM->>Radio: FEED_DONE
+  Radio->>Pi: done
+  Pi->>Cloud: ulink_consumption

@@ -1,0 +1,10 @@
+flowchart TB
+  subgraph tasks [STM32_FreeRTOS]
+    Radio[RadioTask_NRF]
+    Wife[WifeederTask_port_v1_loop]
+    Cmd[CmdTask_CLI]
+    Iwdg[IwdgTask]
+  end
+  Wife <-->|"queues"| Radio
+  Cmd --> Wife
+  Wife --> Iwdg

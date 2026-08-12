@@ -1,0 +1,18 @@
+sequenceDiagram
+    participant MCU as Microcontroller
+    participant NRF as NRF24L01+
+
+    MCU->>NRF: FLUSH_TX / FLUSH_RX
+    MCU->>NRF: CONFIG = 0x0E (RX/TX modes off)
+    MCU->>NRF: SETUP_RETR = 0x1A (500μs, 10 retries)
+    MCU->>NRF: RF_CH = 76 (2.476 GHz)
+    MCU->>NRF: RF_SETUP = 0x06 (1 Mbps, 0 dBm)
+    MCU->>NRF: EN_AA = 0x01 (auto-ACK on pipe 0)
+    MCU->>NRF: EN_RXADDR = 0x01 (enable pipe 0)
+    MCU->>NRF: SETUP_AW = 0x03 (5-byte address)
+    MCU->>NRF: RX_PW_P0 = 32 (32-byte payload)
+    Note over MCU,NRF: Configure addresses...
+    MCU->>NRF: Write TX_ADDR
+    MCU->>NRF: Write RX_ADDR_P0
+    MCU->>NRF: CE = HIGH (start listening/transmitting)
+    NRF-->>MCU: Ready for communication

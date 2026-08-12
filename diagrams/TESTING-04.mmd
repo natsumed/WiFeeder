@@ -1,0 +1,15 @@
+graph TD
+    START["Start Acceptance Test"] --> A1["100 feed cycles<br/>without errors"]
+    A1 --> A2["< 1% packet loss<br/>over 1 hour"]
+    A2 --> A3["±5% feed accuracy<br/>for all animals"]
+    A3 --> A4["MQTT events<br/>all received by cloud"]
+    A4 --> A5["24h battery life<br/>with 2 feeds/h"]
+    A5 --> A6["Automatic recovery<br/>from power loss"]
+    A6 --> PASS[" ACCEPTED"]
+
+    A1 --> FAIL[" REJECTED"]
+    A2 --> FAIL
+    A3 --> FAIL
+    A4 --> FAIL
+    A5 --> FAIL
+    A6 --> FAIL

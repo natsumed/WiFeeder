@@ -1,0 +1,20 @@
+sequenceDiagram
+    participant RPi as RPi (ID=0x00)
+    participant A1 as Actuator 1 (ID=0x01)
+    participant A2 as Actuator 2 (ID=0x02)
+
+    Note over RPi,A2: RPi polls each actuator for status
+    loop Every 5 seconds
+        RPi->>A1: STATUS_REQ to 0x01
+        A1->>RPi: STATUS (0x01)
+        RPi->>A2: STATUS_REQ to 0x02
+        A2->>RPi: STATUS (0x01)
+    end
+
+    Note over A1: Cow detected at Actuator 1
+    A1->>RPi: RFID_TAG (0x02) - animal ID 19946219
+    RPi->>RPi: Lookup animal in DB
+    RPi->>A1: FEED_CMD (0x03) - 3 revs motor 1
+    A1->>A1: Dispense feed
+    A1->>RPi: FEED_DONE (0x04)
+    RPi->>RPi: Update DB, publish MQTT

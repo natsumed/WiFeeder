@@ -1,0 +1,18 @@
+sequenceDiagram
+    participant Cow as 
+    participant STM32 as STM32
+    participant RPi as RPi
+    participant Cloud as  Cloud
+
+    loop Every 5s
+        STM32->>RPi: STATUS (heartbeat)
+        RPi->>STM32: ACK
+    end
+
+    Cow->>STM32: RFID tag read
+    STM32->>RPi: RFID_TAG
+    RPi->>RPi: Lookup diet
+    RPi->>STM32: FEED_CMD (revolutions)
+    STM32->>STM32: Dispense feed
+    STM32->>RPi: FEED_DONE (actual)
+    RPi->>Cloud: Publish via MQTT

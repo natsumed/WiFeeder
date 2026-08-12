@@ -1,0 +1,19 @@
+graph TB
+    subgraph Farm["Farm Network"]
+        Controller["RPi Controller<br/>ID = 0x00"]
+        A1["Actuator 1<br/>ID = 0x01"]
+        A2["Actuator 2<br/>ID = 0x02"]
+        A3["Actuator 3<br/>ID = 0x03"]
+        A4["...<br/>ID = 0x04-0xFE"]
+    end
+
+    Controller <--> |"Pipe 0<br/>0xE7E7E7E7E7"| A1
+    Controller <--> |"Pipe 1<br/>0xC2C2C2C2C2"| A2
+    Controller <--> |"Pipe 2<br/>0xC2C2C2C2C3"| A3
+    Controller <--> |"Pipe 3-5"| A4
+
+    note right of Controller
+        NRF24L01+ supports 6 RX pipes.
+        For >6 actuators, use time-sliced
+        addressing or multiple NRF modules.
+    end note

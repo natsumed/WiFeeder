@@ -1,0 +1,32 @@
+sequenceDiagram
+    participant STM32 as STM32 MCU
+    participant NRF as NRF24L01+
+    participant RPi as Raspberry Pi
+
+    Note over STM32,RPi: Normal operation
+    STM32->>NRF: STATUS (0x01)
+    NRF->>RPi:  ACK received
+
+    Note over STM32,RPi: RPi goes offline
+    STM32->>NRF: STATUS (0x01)
+    NRF-->>STM32:  MAX_RT (no ACK)
+
+    rect rgb(255, 235, 238)
+        STM32->>STM32: Switch to 1s heartbeat
+        loop Every 1 second
+            STM32->>NRF: STATUS (0x01)
+            NRF-->>STM32:  No ACK
+            Note over STM32: LED blinks fast
+        end
+    end
+
+    Note over STM32,RPi: RPi comes back online
+    STM32->>NRF: STATUS (0x01)
+    NRF->>RPi:  ACK received
+    RPi->>NRF: ACK (0x07)
+    NRF->>STM32: ACK received
+
+    rect rgb(232, 245, 233)
+        STM32->>STM32: Switch to 5s heartbeat
+        Note over STM32: LED on solid
+    end

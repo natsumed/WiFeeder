@@ -1,0 +1,25 @@
+Item,Qty,Value,Package,Ref,Notes
+1,1,NUCLEO-L432KC,Nano 15+15 socket,J_NUC_L J_NUC_R,Module — do not chip-down
+2,1,IBT-2 BTS7960,50x50 module,J_IBT TB2,Logic socket + B+/B- screws
+3,1,NRF24 AM1117 adapter,2x4 2.54,J_NRF,VCC=5V
+4,1,PCA9685,TSSOP-28,U3,Addr 0x40 OE=GND
+5,1,AP63205,SOT-23-6,U1,Fixed 5V ~2A
+6,1,AP63203,SOT-23-6,U2,Fixed 3.3V ~1A
+7,2,4.7uH 3A,6x6,L1 L2,
+8,1,AO4407A,SOIC-8,Q1,Reverse-polarity P-FET
+9,1,SMAJ15A,SMA,D1,TVS 15V
+10,1,10A 5x20 fuse,clips,F1,
+11,4,10uF 25V,1206,C1 C4 C8,
+12,2,22uF 16V,1206,C2 C5,
+13,4,100nF,0805,C3 C6 C7,
+14,2,4.7k I2C,0805,R6 R7,
+15,2,4.7k Enc,0805,R4 R5,
+16,1,100k,0805,R1,Q1 gate
+17,2,1k,0805,R2 R3,LED
+18,2,LED green,0805,D2 D3,5V / 3V3
+19,3,Terminal 5.08 2p,,TB1 TB2 TB3,12V / IBT / motor
+20,1,Terminal 5.08 4p,,TB4,Encoder GX fly-wire
+21,2,JST-XH-4,DNP,J_RFID J_HX711,Unpopulated MVP
+22,1,Mini360,DNP,J_MINI,Only if U2 omitted
+23,8,M3 hole,,H1-H8,Board + IBT
+24,0,Mini360 stuffed,,—,Default not fitted

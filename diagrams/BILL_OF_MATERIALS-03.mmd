@@ -1,0 +1,47 @@
+graph TB
+    subgraph Box["Actuator Box (one per feeding point)"]
+        direction TB
+        
+        subgraph Top["Top Section (Logic)"]
+            NUCLEO["NUCLEO-L432KC"]
+            NRF["NRF24L01+"]
+            MINI["Mini360 DC-DC"]
+            RFID_READER["RFID Reader"]
+        end
+
+        subgraph Bottom["Bottom Section (Power)"]
+            IBT["IBT-2 Motor Driver"]
+            TERM["Terminal Blocks"]
+            FUSE["10A Fuse"]
+        end
+
+        subgraph External["External Connectors"]
+            PWR_IN["12V Power Input"]
+            MOTOR1_OUT["Motor 1 Output"]
+            MOTOR2_OUT["Motor 2 Output"]
+            ENC1_IN["Encoder 1 Input"]
+            ENC2_IN["Encoder 2 Input"]
+            RFID_IN["RFID Antenna Input"]
+            USB_IN["USB Debug Port"]
+        end
+    end
+
+    PWR_IN --> FUSE
+    FUSE --> MINI
+    FUSE --> IBT
+    MINI --> NUCLEO
+    MINI --> NRF
+    MINI --> RFID_READER
+    NUCLEO --> IBT
+    NUCLEO --> NRF
+    NUCLEO --> RFID_READER
+    IBT --> MOTOR1_OUT
+    IBT --> MOTOR2_OUT
+    ENC1_IN --> NUCLEO
+    ENC2_IN --> NUCLEO
+    RFID_IN --> RFID_READER
+    USB_IN --> NUCLEO
+
+    style Box fill:#f5f5f5,stroke:#333
+    style Top fill:#e8f5e9,stroke:#2e7d32
+    style Bottom fill:#fff3e0,stroke:#e65100

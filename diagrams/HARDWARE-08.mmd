@@ -1,0 +1,11 @@
+graph LR
+    subgraph HX["HX711 Module"]
+        H1["VCC"] -->|"3.3V"| PWR_33["Mini360 Output"]
+        H2["GND"] -->|"GND"| GND_CMN["Common Ground"]
+        H3["DOUT"] -->|"PB4"| STM_DOUT["STM32 GPIO Input"]
+        H4["SCK"] -->|"PB5"| STM_SCK["STM32 GPIO Output"]
+        H5["E+"] -->|"Red"| LC1["Load Cell"]
+        H6["E-"] -->|"Black"| LC1
+        H7["A+"] -->|"Green"| LC1
+        H8["A-"] -->|"White"| LC1
+    end

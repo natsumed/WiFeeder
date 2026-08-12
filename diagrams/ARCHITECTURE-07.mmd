@@ -1,0 +1,26 @@
+stateDiagram-v2
+    [*] --> INIT: Power On
+    INIT --> CONFIG_READ: Boot
+    CONFIG_READ --> RADIO_INIT: Read config
+    RADIO_INIT --> IDLE: NRF24L01+ ready
+
+    IDLE --> HEARTBEAT: Timer (5s)
+    HEARTBEAT --> WAIT_ACK: Send STATUS
+    WAIT_ACK --> IDLE: ACK received
+    WAIT_ACK --> RETRY: No ACK (3 retries)
+    RETRY --> IDLE: After retry
+    RETRY --> ERROR: After max retries
+    ERROR --> IDLE: Reconnect
+
+    IDLE --> TAG_READ: RFID detected
+    TAG_READ --> SEND_TAG: Tag valid
+    SEND_TAG --> WAIT_CMD: RFID_TAG sent
+
+    WAIT_CMD --> START_FEED: FEED_CMD received
+    WAIT_CMD --> IDLE: Timeout (no command)
+    START_FEED --> FEEDING: Motors running
+    FEEDING --> FEED_DONE: Encoders done
+    FEED_DONE --> IDLE: FEED_DONE sent
+
+    IDLE --> WEIGHING: Weight requested
+    WEIGHING --> IDLE: WEIGHT sent

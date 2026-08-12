@@ -1,0 +1,15 @@
+sequenceDiagram
+    participant STM32 as STM32 MCU
+    participant NRF_S as NRF24L01 (STM)
+    participant NRF_P as NRF24L01 (RPi)
+    participant RPi as Raspberry Pi
+
+    loop Every 5 seconds
+        STM32->>NRF_S: Send STATUS (msg ID=0x01)
+        NRF_S->>NRF_P: 2.4GHz packet + auto-ACK
+        NRF_P->>RPi: STATUS received
+        RPi->>NRF_P: Send ACK (msg ID=0x07)
+        NRF_P->>NRF_S: 2.4GHz packet + auto-ACK
+        NRF_S->>STM32: ACK received
+        Note over STM32: Update connection status
+    end

@@ -1,0 +1,33 @@
+stateDiagram-v2
+    [*] --> LISTENING: NRF24L01+ initialized
+
+    LISTENING --> PARSE: Packet received
+    PARSE --> CRC_CHECK: Parse header
+    CRC_CHECK --> ROUTE: CRC valid
+    CRC_CHECK --> LISTENING: CRC invalid (discard)
+
+    ROUTE --> STATUS_HANDLER: MsgType=0x01
+    ROUTE --> RFID_HANDLER: MsgType=0x02
+    ROUTE --> FEEDBACK_HANDLER: MsgType=0x04
+    ROUTE --> WEIGHT_HANDLER: MsgType=0x05
+    ROUTE --> ERROR_HANDLER: MsgType=0x08
+
+    STATUS_HANDLER --> UPDATE_HEARTBEAT: Update timestamp
+    UPDATE_HEARTBEAT --> SEND_ACK: Send ACK (0x07)
+    SEND_ACK --> LISTENING
+
+    RFID_HANDLER --> LOOKUP_DB: Lookup animal
+    LOOKUP_DB --> CALC_PORTION: Animal found
+    LOOKUP_DB --> LISTENING: Unknown animal
+    CALC_PORTION --> SEND_CMD: Send FEED_CMD (0x03)
+    SEND_CMD --> LISTENING
+
+    FEEDBACK_HANDLER --> UPDATE_DB: Update consumption
+    UPDATE_DB --> PUBLISH_MQTT: Publish to cloud
+    PUBLISH_MQTT --> LISTENING
+
+    WEIGHT_HANDLER --> STORE_WEIGHT: Store in DB
+    STORE_WEIGHT --> LISTENING
+
+    ERROR_HANDLER --> LOG_ERROR: Log to syslog
+    LOG_ERROR --> LISTENING

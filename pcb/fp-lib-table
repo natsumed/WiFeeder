@@ -1,0 +1,4 @@
+(fp_lib_table
+  (version 7)
+  (lib (name "wifeeder")(type "KiCad")(uri "${KIPRJMOD}/libs/wifeeder.pretty")(options "")(descr "WiFeeder actuator local footprints"))
+)

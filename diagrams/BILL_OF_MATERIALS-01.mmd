@@ -1,0 +1,21 @@
+graph TB
+    subgraph Station["One Station"]
+        subgraph Pi["Raspberry Pi Controller"]
+            R1["Raspberry Pi 3B+ or 4"]
+            R2["NRF24L01+ Module"]
+            R3["MicroSD Card 32GB"]
+            R4["5V 3A USB-C Power"]
+            R5["Ethernet or WiFi"]
+        end
+
+        subgraph Act["1 Actuator"]
+            A1["NUCLEO-L432KC"]
+            A2["NRF24L01+ Module"]
+            A3["IBT-2 Motor Driver"]
+            A4["Mini360 DC-DC Buck"]
+            A5["RFID Reader 125kHz"]
+            A6["DC Motor with Encoder"]
+            A7["DC Motor with Encoder"]
+            A8["12V Battery or PSU"]
+        end
+    end

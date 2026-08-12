@@ -1,0 +1,31 @@
+graph TB
+    subgraph Main["Main Process (wcontroller)"]
+        direction TB
+
+        subgraph Threads["Threads"]
+            T1["NRF Thread<br/>Radio RX/TX<br/>Prio: High"]
+            T2["Diet Thread<br/>Feed Calculation<br/>Prio: Normal"]
+            T3["MQTT Thread<br/>Cloud Sync<br/>Prio: Normal"]
+            T4["Web Thread<br/>Dashboard<br/>Prio: Low"]
+        end
+
+        subgraph Shared["Shared Resources"]
+            DB["SQLite DB<br/>(Mutex Protected)"]
+            NRF_QUEUE["NRF TX Queue<br/>(Thread-Safe)"]
+            EVENT_QUEUE["Event Queue<br/>(Thread-Safe)"]
+        end
+    end
+
+    T1 -->|"RX events"| EVENT_QUEUE
+    EVENT_QUEUE -->|"Process"| T2
+    T2 -->|"FEED_CMD"| NRF_QUEUE
+    NRF_QUEUE -->|"TX"| T1
+    T2 --> DB
+    T3 --> DB
+    T3 -->|"Config"| NRF_QUEUE
+    T4 --> DB
+
+    style T1 fill:#fff3e0
+    style T2 fill:#e8f5e9
+    style T3 fill:#e8eaf6
+    style T4 fill:#f3e5f5

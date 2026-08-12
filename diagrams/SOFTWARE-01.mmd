@@ -1,0 +1,26 @@
+graph TB
+    subgraph Kernel["FreeRTOS Kernel"]
+        direction TB
+        S["Scheduler<br/>(Preemptive)"]
+    end
+
+    subgraph Tasks["Application Tasks"]
+        T1["CmdTask<br/>Prio: BelowNormal<br/>Stack: 512 words<br/>UART CLI + Debug"]
+        T2["WifeederTask<br/>Prio: Normal<br/>Stack: 1024 words<br/>Main Control Loop"]
+        T3["RadioTask<br/>Prio: AboveNormal<br/>Stack: 512 words<br/>NRF24L01+ TX/RX"]
+        T4["IwdgTask<br/>Prio: Low<br/>Stack: 256 words<br/>Watchdog Refresh"]
+    end
+
+    S --> T1
+    S --> T2
+    S --> T3
+    S --> T4
+
+    T2 --> |"Queues"| T3
+    T3 --> |"Queues"| T2
+    T1 --> |"Commands"| T2
+
+    style T1 fill:#e8eaf6
+    style T2 fill:#e8f5e9
+    style T3 fill:#fff3e0
+    style T4 fill:#fce4ec

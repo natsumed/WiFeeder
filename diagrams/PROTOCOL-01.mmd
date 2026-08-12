@@ -1,0 +1,12 @@
+graph TB
+    subgraph STM32["STM32 (Actuator) - TX Mode"]
+        S_P0["Pipe 0: RX_ADDR = 0xE7E7E7E7E7<br/>(for auto-ACK)"]
+        S_TX["TX_ADDR    = 0xE7E7E7E7E7<br/>(RPi address)"]
+    end
+
+    subgraph RPI["Raspberry Pi (Controller) - RX Mode"]
+        R_P0["Pipe 0: RX_ADDR = 0xE7E7E7E7E7<br/>(listen to STM32)"]
+        R_TX["TX_ADDR    = 0xE7E7E7E7E7<br/>(for ACK responses)"]
+    end
+
+    S_TX <-.-> |"2.4 GHz<br/>Packet + ACK"| R_P0

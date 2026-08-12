@@ -1,0 +1,9 @@
+{
+	"station_sn": "WCN-A100-0001X",
+	"mqtt_broker": "localhost",
+	"mqtt_port": 1883,
+	"data_path": "./wifeeder-data.json",
+	"nrf_spi": "/dev/spidev0.0",
+	"nrf_ce_gpio": 25,
+	"wa_conn_timeout_sec": 300
+}

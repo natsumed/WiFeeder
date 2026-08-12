@@ -1,0 +1,27 @@
+classDiagram
+    class NRF24L01 {
+        +nrf24_init() T_eError_eErrorType
+        +nrf24_send(uint8_t* data, size_t len) T_eError_eErrorType
+        +nrf24_receive(uint8_t* data, size_t* len) T_eError_eErrorType
+        +nrf24_is_data_available() bool
+        +nrf24_set_channel(uint8_t ch) void
+        +nrf24_set_power(uint8_t power) void
+        -spi_transfer(uint8_t cmd) uint8_t
+        -spi_write_register(uint8_t reg, uint8_t val) void
+        -spi_read_register(uint8_t reg) uint8_t
+        -flush_tx() void
+        -flush_rx() void
+    }
+
+    class Protocol {
+        +protocol_send_status(uint32_t heartbeat) T_eError_eErrorType
+        +protocol_send_rfid(uint32_t tag_id) T_eError_eErrorType
+        +protocol_send_feed_done(uint32_t animal_id, uint16_t m1, uint16_t m2) T_eError_eErrorType
+        +protocol_send_weight(uint32_t animal_id, uint32_t grams) T_eError_eErrorType
+        +protocol_receive(msg_t* msg) T_eError_eErrorType
+        -pack(msg_t* msg, uint8_t* buf) void
+        -unpack(uint8_t* buf, msg_t* msg) T_eError_eErrorType
+        -crc8(uint8_t* data, size_t len) uint8_t
+    }
+
+    Protocol --> NRF24L01 : uses

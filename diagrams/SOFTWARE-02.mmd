@@ -1,0 +1,48 @@
+graph TB
+    subgraph App["Application Layer"]
+        MAIN["main.c<br/>Init + Task Creation"]
+        WIFEEDER["wifeeder.c<br/>Main Loop + State Machine"]
+        CMD["cmd.c<br/>CLI Command Handler"]
+    end
+
+    subgraph Drivers["Driver Layer"]
+        NRF["nrf24l01.c<br/>SPI + NRF Protocol"]
+        RFID["rfid.c<br/>UART2 + Tag Parsing"]
+        MOTOR["motor.c<br/>PWM + IBT-2 Control"]
+        ENCODER["encoder.c<br/>TIM2/3 Quadrature"]
+        HX711_DRV["hx711.c<br/>Load Cell Reading"]
+        FLASH["flash.c<br/>Config Storage"]
+    end
+
+    subgraph HAL["HAL Layer"]
+        SPI["STM32 HAL SPI"]
+        UART["STM32 HAL UART"]
+        TIM["STM32 HAL TIM"]
+        GPIO["STM32 HAL GPIO"]
+    end
+
+    subgraph Common["Common Libraries"]
+        CRC["crc8.c<br/>CRC-8 Checksum"]
+        ERROR["error.h<br/>Error Codes"]
+        UTIL["utilities.c<br/>String Conversion"]
+    end
+
+    WIFEEDER --> NRF
+    WIFEEDER --> RFID
+    WIFEEDER --> MOTOR
+    WIFEEDER --> ENCODER
+    WIFEEDER --> HX711_DRV
+    WIFEEDER --> FLASH
+
+    NRF --> SPI
+    NRF --> GPIO
+    RFID --> UART
+    MOTOR --> TIM
+    MOTOR --> GPIO
+    ENCODER --> TIM
+    HX711_DRV --> GPIO
+
+    WIFEEDER --> CRC
+    WIFEEDER --> ERROR
+    WIFEEDER --> UTIL
+    NRF --> CRC

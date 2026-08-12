@@ -1,0 +1,10 @@
+graph TB
+    BAT["12V Battery"] -->|"12V"| IBT["IBT-2 Motor Driver"]
+    BAT -->|"12V"| BUCK["Mini360 Buck"]
+    BUCK -->|"3V3"| STM32["NUCLEO-L432KC"]
+    BUCK -->|"3V3 daisy"| PCA["PCA9685"]
+    STM32 -->|"I2C PB6/PB7"| PCA
+    PCA -->|"PWM0/PWM1"| IBT
+    IBT -->|"Motor Out"| MOTOR1["Motor 1"]
+    STM32 -->|"5V → NRF"| NRF["NRF24 adapter"]
+    NRF -->|"5V daisy"| IBT

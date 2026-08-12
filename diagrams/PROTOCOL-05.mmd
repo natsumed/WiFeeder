@@ -1,0 +1,29 @@
+sequenceDiagram
+    participant Cow as  Cow
+    participant RFID as RFID Reader
+    participant STM32 as STM32 MCU
+    participant NRF as NRF24L01+
+    participant RPi as Raspberry Pi
+    participant DB as Database
+
+    rect rgb(240, 248, 255)
+        Note over STM32,RPi: Regular heartbeat (every 5s)
+        STM32->>NRF: STATUS (0x01)
+        NRF->>RPi: RF packet
+        RPi->>NRF: ACK (0x07)
+    end
+
+    Cow->>RFID: Approaches feeder
+    RFID->>STM32: Tag detected
+    STM32->>NRF: RFID_TAG (0x02)
+    NRF->>RPi: RF packet
+    RPi->>DB: Lookup animal (RFID)
+    DB->>RPi: Diet data
+    RPi->>RPi: Calculate portion
+    RPi->>NRF: FEED_CMD (0x03)
+    NRF->>STM32: RF packet
+    STM32->>STM32: Start motors
+    Note over STM32: Feeding in progress...
+    STM32->>NRF: FEED_DONE (0x04)
+    NRF->>RPi: RF packet
+    RPi->>DB: Update consumption

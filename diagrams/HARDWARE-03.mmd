@@ -1,0 +1,30 @@
+graph LR
+    subgraph Pi["Raspberry Pi GPIO"]
+        P1["GPIO11 (SPI0 SCLK)"]
+        P2["GPIO9  (SPI0 MISO)"]
+        P3["GPIO10 (SPI0 MOSI)"]
+        P4["GPIO8  (SPI0 CE0)"]
+        P5["GPIO25 (GPIO)"]
+        P6["GPIO24 (GPIO)"]
+    end
+
+    subgraph NRF["NRF24L01+ Module"]
+        N1["SCK"]
+        N2["MISO"]
+        N3["MOSI"]
+        N4["CSN"]
+        N5["CE"]
+        N6["IRQ"]
+    end
+
+    P1 --> N1
+    P2 --> N2
+    P3 --> N3
+    P4 --> N4
+    P5 --> N5
+    N6 --> P6
+
+    subgraph PowerPi["Pi Power"]
+        PP1["VCC → 3.3V (Pi Header Pin 1)"]
+        PP2["GND → Pi Header Pin 6"]
+    end

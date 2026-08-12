@@ -1,0 +1,23 @@
+graph TB
+    subgraph Farm[" Farm Layout"]
+        subgraph Station1["Station 1"]
+            RPi1["Raspberry Pi<br/>Controller #1"]
+            STM1_1["Actuator #1<br/>NUCLEO-L432KC"]
+            STM1_2["Actuator #2<br/>NUCLEO-L432KC"]
+            STM1_3["Actuator #3<br/>NUCLEO-L432KC"]
+            RPi1 <-.-> |"NRF24L01+"| STM1_1
+            RPi1 <-.-> |"NRF24L01+"| STM1_2
+            RPi1 <-.-> |"NRF24L01+"| STM1_3
+        end
+
+        subgraph Station2["Station 2"]
+            RPi2["Raspberry Pi<br/>Controller #2"]
+            STM2_1["Actuator #1<br/>NUCLEO-L432KC"]
+            STM2_2["Actuator #2<br/>NUCLEO-L432KC"]
+            RPi2 <-.-> |"NRF24L01+"| STM2_1
+            RPi2 <-.-> |"NRF24L01+"| STM2_2
+        end
+    end
+
+    RPi1 --> |"MQTT"| Cloud[" Agpro Cloud"]
+    RPi2 --> |"MQTT"| Cloud

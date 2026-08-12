@@ -1,0 +1,26 @@
+graph LR
+    subgraph Pi["Raspberry Pi"]
+        direction TB
+        A1["NRF24L01+ Driver<br/>(C++)"] --> A2["Protocol Layer<br/>(msg pack/unpack)"]
+        A2 --> A3["Message Router"]
+        A3 --> A4["Diet Engine"]
+        A3 --> A5["MQTT Client"]
+        A4 --> A6["SQLite DB"]
+        A5 --> A7["Mosquitto"]
+    end
+
+    subgraph STM32["NUCLEO-L432KC"]
+        direction TB
+        B1["NRF24L01+ Driver<br/>(C)"]
+        B1 --> B2["Protocol Layer<br/>(msg pack/unpack)"]
+        B2 --> B3["Main Task<br/>(FreeRTOS)"]
+        B3 --> B4["RFID Task"]
+        B3 --> B5["Motor Task"]
+        B3 --> B6["Sensor Task"]
+        B3 --> B7["Watchdog Task"]
+        B4 --> B8["UART2"]
+        B5 --> B9["PWM + GPIO"]
+        B6 --> B10["HX711 SPI"]
+    end
+
+    A1 <-.-> |"2.4 GHz"| B1

@@ -1,0 +1,58 @@
+# Build / CMake
+build/
+build_*/
+**/CMakeCache.txt
+**/CMakeFiles/
+cmake-build-*/
+compile_commands.json
+*.o
+*.obj
+*.a
+*.so
+*.dylib
+*.elf
+*.bin
+*.hex
+*.map
+*.lst
+*.d
+*.su
+*.i
+*.ii
+
+# Env / secrets
+.env
+.env.*
+!.env.example
+*.pem
+credentials.json
+**/secrets/
+
+# KiCad
+pcb/**/fp-info-cache
+pcb/**/*-backups/
+*-backups/
+*.kicad_pcb-bak
+*.kicad_sch-bak
+*.kicad_prl
+\#auto_saved_files\#
+*_tmp_*.pdf
+*-backups.zip
+
+# OS / editor noise
+.DS_Store
+Thumbs.db
+*~
+*.swp
+*.swo
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Logs / temp
+*.log
+tmp/
+.tmp/

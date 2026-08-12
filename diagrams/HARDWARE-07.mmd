@@ -1,0 +1,8 @@
+graph LR
+    subgraph RFID["RFID Reader 125kHz EM4100"]
+        R1["VCC"] -->|"5V"| PWR_5V["5V Rail"]
+        R2["GND"] -->|"GND"| GND_CMN["Common Ground"]
+        R3["TX"] -->|"PA3"| STM_RX["USART2_RX"]
+        R5["ANT1"] -->|"Coil"| ANT["Antenna Coil"]
+        R6["ANT2"] -->|"Coil"| ANT
+    end

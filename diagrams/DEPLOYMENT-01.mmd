@@ -1,0 +1,15 @@
+sequenceDiagram
+    participant Dev as Developer PC
+    participant STM32 as NUCLEO-L432KC
+
+    Dev->>Dev: Clone repository
+    Dev->>Dev: cd stm32 && mkdir build && cd build
+    Dev->>Dev: cmake .. -DTOOLCHAIN=arm-none-eabi
+    Dev->>Dev: cmake --build . -j$(nproc)
+    Dev->>Dev: Check build output
+    Note over Dev: wifeeder_mcu.bin created
+    Dev->>STM32: Copy .bin to NUCLEO drive
+    Dev->>STM32: Press RESET button
+    STM32->>STM32: Boot new firmware
+    Dev->>STM32: Open serial terminal (115200 baud)
+    Note over Dev,STM32: Verify boot messages

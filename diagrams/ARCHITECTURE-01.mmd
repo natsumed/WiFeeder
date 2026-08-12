@@ -1,0 +1,44 @@
+graph TB
+    subgraph Cloud[" Agpro Cloud"]
+        MQTT_BROKER["MQTT Broker<br/>Cloud Backend"]
+        WEB_DASH["Web Dashboard<br/>Farmer Interface"]
+    end
+
+    subgraph RPi[" Raspberry Pi Controller"]
+        MQTT_CLIENT["MQTT Client<br/>(Mosquitto)"]
+        DIET_ENGINE["Diet Engine<br/>(C++20)"]
+        DB["SQLite<br/>Database"]
+        WEB_SRV["Web Server<br/>(Optional)"]
+        NRF_RPI["NRF24L01+<br/>SPI0 Module"]
+
+        MQTT_CLIENT <--> |"JSON/TLS"| MQTT_BROKER
+        MQTT_CLIENT --> DIET_ENGINE
+        DIET_ENGINE --> DB
+        DIET_ENGINE --> NRF_RPI
+        WEB_SRV --> DB
+    end
+
+    subgraph STM32[" NUCLEO-L432KC Actuator"]
+        NRF_STM32["NRF24L01+<br/>SPI1 Module"]
+        MAIN_LOOP["Main Control<br/>Loop"]
+        RFID["RFID Reader<br/>125kHz/EM"]
+        MOTOR["IBT-2 Motor<br/>Driver"]
+        ENCODER["Quadrature<br/>Encoders"]
+        HX711["HX711 Load<br/>Cell (Opt.)"]
+        CLI["Debug CLI<br/>UART2"]
+
+        NRF_STM32 --> MAIN_LOOP
+        MAIN_LOOP --> RFID
+        MAIN_LOOP --> MOTOR
+        MAIN_LOOP --> ENCODER
+        MAIN_LOOP --> HX711
+        MAIN_LOOP --> CLI
+    end
+
+    NRF_RPI <-.-> |"2.4GHz"| NRF_STM32
+    POWER[" 12V Battery<br/>+ Mini360 Buck"] --> STM32
+
+    style Cloud fill:#e1f5fe,stroke:#01579b
+    style RPi fill:#e8f5e9,stroke:#1b5e20
+    style STM32 fill:#fff3e0,stroke:#e65100
+    style POWER fill:#fce4ec,stroke:#880e4f

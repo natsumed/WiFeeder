@@ -1,0 +1,27 @@
+graph LR
+    subgraph STM32["NUCLEO-L432KC"]
+        S1["PA5 SCK"]
+        S2["PB1 MISO"]
+        S3["PA7 MOSI"]
+        S4["PA4 CSN"]
+        S5["PB0 CE"]
+    end
+
+    subgraph NRF["NRF24L01+ Module"]
+        N1["SCK"]
+        N2["MISO"]
+        N3["MOSI"]
+        N4["CSN"]
+        N5["CE"]
+    end
+
+    S1 --> N1
+    S2 --> N2
+    S3 --> N3
+    S4 --> N4
+    S5 --> N5
+
+    subgraph Power["NRF24L01+ Power"]
+        P1["VCC → 5V into AM1117 adapter"]
+        P2["GND → Common Ground"]
+    end

@@ -1,0 +1,28 @@
+sequenceDiagram
+    participant NRF_Thread as NRF Thread
+    participant EventQ as Event Queue
+    participant Diet_Thread as Diet Thread
+    participant DB as Database
+    participant MQTT_Thread as MQTT Thread
+    participant Cloud as Agpro Cloud
+
+    NRF_Thread->>NRF_Thread: Packet received
+    NRF_Thread->>NRF_Thread: Parse + validate CRC
+    NRF_Thread->>EventQ: Push(event)
+    EventQ->>Diet_Thread: Pop(event)
+
+    alt RFID_TAG event
+        Diet_Thread->>DB: Lookup animal (RFID)
+        DB->>Diet_Thread: Diet data
+        Diet_Thread->>Diet_Thread: Calc portion
+        Diet_Thread->>NRF_Thread: Send FEED_CMD
+    else FEED_DONE event
+        Diet_Thread->>DB: Update consumption
+        DB->>Diet_Thread: OK
+        Diet_Thread->>MQTT_Thread: Publish feed event
+        MQTT_Thread->>Cloud: MQTT message
+    else WEIGHT event
+        Diet_Thread->>DB: Store weight
+        Diet_Thread->>MQTT_Thread: Publish weight
+        MQTT_Thread->>Cloud: MQTT message
+    end

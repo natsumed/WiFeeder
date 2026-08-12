@@ -1,0 +1,12 @@
+flowchart TD
+    START["Motor not spinning"] --> A{"IBT-2 powered?"}
+    A -->|"Yes"| B{"Enable tied to 3.3V?"}
+    A -->|"No"| F1["Check 12V to IBT-2 VCC<br/>Motor wires to M+/M-"]
+    B -->|"Yes"| C{"PWM signal present?"}
+    B -->|"No"| F2["Tie R_EN and L_EN to 3.3V"]
+    C -->|"Yes"| D{"Direction set?"}
+    C -->|"No"| F3["Check TIM1_CH1 PA8 or TIM16_CH1 PB6<br/>PWM at 10 kHz"]
+    D -->|"Yes"| E{"Motor OK?"}
+    D -->|"No"| F4["Set LPWM LOW for forward<br/>RPWM LOW, LPWM PWM for reverse"]
+    E -->|"Yes"| OK["Motor spinning"]
+    E -->|"No"| F5["Motor may be damaged<br/>Check with 12V directly"]

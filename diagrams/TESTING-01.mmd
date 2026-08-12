@@ -1,0 +1,28 @@
+graph TB
+    subgraph System[" System Tests (Manual)"]
+        S1["Full day feeding simulation"]
+        S2["Multi-actuator stress test"]
+        S3["Power failure recovery"]
+        S4["Range interference test"]
+    end
+
+    subgraph Integration[" Integration Tests (Semi-Automated)"]
+        I1["NRF TX/RX loopback"]
+        I2["RFID → FEED_CMD cycle"]
+        I3["Motor encoder accuracy"]
+        I4["HX711 calibration"]
+        I5["Database CRUD"]
+        I6["MQTT publish/subscribe"]
+    end
+
+    subgraph Unit[" Unit Tests (Automated)"]
+        U1["CRC-8 calculation"]
+        U2["Message pack/unpack"]
+        U3["RFID frame parser"]
+        U4["Diet calculator"]
+        U5["NRF SPI driver"]
+        U6["PWM generation"]
+    end
+
+    System --> Integration
+    Integration --> Unit

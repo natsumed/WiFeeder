@@ -1,0 +1,62 @@
+erDiagram
+    ANIMALS {
+        uint32 rfid PK
+        string name
+        uint32 diet_id FK
+        double weight_kg
+        uint64 weight_ts
+    }
+
+    DIETS {
+        uint32 diet_id PK
+        uint8 feed_id
+        string start_time
+        string end_time
+        uint32 inter_seconds
+        uint32 d_max_grams
+        uint32 d_qty_grams
+        uint32 p_max_grams
+        uint32 density
+    }
+
+    CONSUMPTION {
+        uint32 id PK
+        uint32 rfid FK
+        uint32 diet_id FK
+        uint32 feed_id FK
+        double day_weight
+        double day_left
+        uint32 day_ports
+        string date
+    }
+
+    FEED_HISTORY {
+        uint32 id PK
+        uint32 rfid FK
+        uint16 motor1_actual
+        uint16 motor2_actual
+        uint64 timestamp
+    }
+
+    WEIGHTS {
+        uint32 id PK
+        uint32 rfid FK
+        double weight_g
+        uint64 timestamp
+    }
+
+    ACTUATORS {
+        uint8 station_id PK
+        uint8 motor1_status
+        uint8 motor2_status
+        uint8 rfid_status
+        uint8 hx711_status
+        uint64 last_seen
+    }
+
+    ANIMALS ||--o{ CONSUMPTION : has
+    ANIMALS ||--o{ FEED_HISTORY : has
+    ANIMALS ||--o{ WEIGHTS : has
+    DIETS ||--o{ ANIMALS : assigned_to
+    DIETS ||--o{ CONSUMPTION : tracked_by
+    ACTUATORS ||--o{ FEED_HISTORY : produced_by

@@ -1,0 +1,6 @@
+graph LR
+    CLOUD[" Agpro Cloud"] <-->|"MQTT"| RPI[" Raspberry Pi"]
+    RPI <-.->|"NRF24L01+<br/>2.4 GHz"| STM[" NUCLEO-L432KC"]
+    STM --> RFID[" RFID Reader"]
+    STM --> MOTOR[" Motors (2x)"]
+    STM --> HX711[" Load Cell"]

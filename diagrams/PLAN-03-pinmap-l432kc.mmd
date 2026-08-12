@@ -1,0 +1,26 @@
+graph TB
+  subgraph nucleo [NUCLEO_L432KC]
+    subgraph nrf [NRF24_bitbang]
+      N1["PA5_SCK"]
+      N2["PA7_MOSI"]
+      N3["PB1_MISO"]
+      N4["PA4_CSN"]
+      N5["PB0_CE"]
+    end
+    subgraph motors [IBT2]
+      M1["PA8_TIM1_PWM_M1"]
+      M1d["PA9_DIR_M1"]
+      M2["PB6_TIM16_PWM_M2"]
+      M2d["PB7_DIR_M2"]
+    end
+    subgraph enc [Encoders]
+      E1["PA0_PA1_TIM2_ENC1"]
+      E2["PA11_PA12_ENC2_soft"]
+    end
+    subgraph io [Sensors_Debug]
+      R["PA3_USART2_RFID_RX"]
+      U["PA2_LPUART1_VCP"]
+      H["PB4_PB5_HX711"]
+      L["PB3_LED"]
+    end
+  end

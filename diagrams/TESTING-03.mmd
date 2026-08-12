@@ -1,0 +1,18 @@
+sequenceDiagram
+    participant Cow as  Test Cow
+    participant Feeder as Feeder System
+    participant Cloud as Agpro Cloud
+
+    loop 10 times
+        Cow->>Feeder: RFID tag detected
+        Feeder->>Feeder: Calculate portion
+        Feeder->>Feeder: Dispense feed
+        Feeder->>Cloud: Report consumption
+        Note over Cow: Wait 30s (inter-feed timeout)
+    end
+
+    Note over Cow,Cloud: Verify:
+    Note over Cow,Cloud: 1. All 10 feeds successful
+    Note over Cow,Cloud: 2. Portion accuracy ±5%
+    Note over Cow,Cloud: 3. All MQTT events received
+    Note over Cow,Cloud: 4. No packet loss > 1%

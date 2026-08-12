@@ -1,0 +1,8 @@
+flowchart TB
+  P1[Phase1_Structure] --> P2[Phase2_ComponentTests]
+  P2 --> Gate{HW_tests_PASS}
+  Gate -->|yes| P3[Phase3_STM_port]
+  Gate -->|no| Fix[Fix_wiring]
+  Fix --> P2
+  P3 --> P4[Phase4_Pi_port]
+  P4 --> P5[Phase5_E2E_MQTT]

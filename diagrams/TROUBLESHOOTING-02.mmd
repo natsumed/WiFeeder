@@ -1,0 +1,10 @@
+flowchart TD
+    START["RFID not reading"] --> A{"Reader powered?"}
+    A -->|"Yes"| B{"Receiving data<br/>on UART2?"}
+    A -->|"No"| F1["Check 5V/3.3V power<br/>to RFID reader"]
+    B -->|"Yes"| C{"Frame format<br/>correct?"}
+    B -->|"No"| F2["Check UART2 wiring:<br/>PA3 (RX) ↔ RFID TX<br/>PA2 (TX) ↔ RFID RX<br/>9600 baud, 8N1"]
+    C -->|"Yes"| D{"Tag ID valid?"}
+    C -->|"No"| F3["Frame must start with<br/>$A0112OKD, 27 bytes"]
+    D -->|"Yes"| OK[" RFID working"]
+    D -->|"No"| F4["Check tag format:<br/>EM4100 26-bit<br/>Verify with test tag"]

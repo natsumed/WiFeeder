@@ -1,0 +1,42 @@
+(kicad_sch (version 20211123) (generator eeschema)
+
+  (uuid 5e942c88-d23b-4276-a3e5-adc2c428d0be)
+
+  (paper "A3")
+
+  (title_block
+    (title "Connectors / mechanical")
+    (date "2026-08-11")
+    (rev "1")
+    (company "WiFeeder")
+    (comment 1 "Hybrid actuator carrier - pins match stm32/Core/Inc/board.h")
+  )
+
+  (lib_symbols
+  )
+
+  (text "GX series not locked (measure chassis). Use 5.08 mm screws; panel GX fly-wires 20 mm." (at 15 180 0)
+    (effects (font (size 1.8 1.8)) (justify left bottom))
+    (uuid 334056f6-702e-440e-bec5-d81b1f425db9)
+  )
+  (text "IBT-2 outline keepout 50×50 mm + heatsink height. Nucleo USB overhang 15 mm off top edge." (at 15 174 0)
+    (effects (font (size 1.6 1.6)) (justify left bottom))
+    (uuid 583be30b-298b-4877-bd11-782469ad94d0)
+  )
+  (text "NRF antenna keepout: no 12V pour, no ground pour under SMA (top-right)." (at 15 168 0)
+    (effects (font (size 1.6 1.6)) (justify left bottom))
+    (uuid f0bce8b4-a987-44ff-b066-0f9a936c3f33)
+  )
+  (text "H1–H4 board M3. H5–H8 IBT module (43 mm square typical — verify)." (at 15 162 0)
+    (effects (font (size 1.6 1.6)) (justify left bottom))
+    (uuid dc4fbb54-0171-40af-b178-9f8bee700f06)
+  )
+  (text "PA6 silkscreen: NC. NRF VCC = 5V. USB unplugged when 3V3 injected." (at 15 156 0)
+    (effects (font (size 1.6 1.6)) (justify left bottom))
+    (uuid b2d82ad6-9dcc-4960-bd45-c1c5ef8e1361)
+  )
+
+  (sheet_instances
+    (path "/" (page "1"))
+  )
+)

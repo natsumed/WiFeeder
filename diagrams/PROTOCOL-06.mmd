@@ -1,0 +1,18 @@
+sequenceDiagram
+    participant RFID as RFID Reader
+    participant STM32 as STM32 MCU
+    participant NRF as NRF24L01+
+    participant RPi as Raspberry Pi
+
+    rect rgb(255, 248, 240)
+        Note over STM32,RPi: Animal on scale
+        RFID->>STM32: Tag detected
+        STM32->>NRF: RFID_TAG (0x02)
+        NRF->>RPi: RF packet
+    end
+
+    STM32->>STM32: Read HX711 (20 samples)
+    STM32->>NRF: WEIGHT (0x05)
+    NRF->>RPi: RF packet (weight in grams)
+    RPi->>RPi: Store weight in DB
+    RPi->>RPi: Publish to MQTT

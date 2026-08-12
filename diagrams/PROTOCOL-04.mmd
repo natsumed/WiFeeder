@@ -1,0 +1,11 @@
+graph TB
+    subgraph Messages["Message Types"]
+        M1["0x01 - STATUS<br/>(STM32→RPi)<br/>Heartbeat + sensors"]
+        M2["0x02 - RFID_TAG<br/>(STM32→RPi)<br/>Tag detected"]
+        M3["0x03 - FEED_CMD<br/>(RPi→STM32)<br/>Start feeding"]
+        M4["0x04 - FEED_DONE<br/>(STM32→RPi)<br/>Feeding complete"]
+        M5["0x05 - WEIGHT<br/>(STM32→RPi)<br/>Weight data"]
+        M6["0x06 - CONFIG<br/>(RPi→STM32)<br/>Config update"]
+        M7["0x07 - ACK<br/>(Both directions)<br/>Acknowledge"]
+        M8["0x08 - ERROR<br/>(Both directions)<br/>Error report"]
+    end

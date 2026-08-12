@@ -1,0 +1,38 @@
+graph TB
+    subgraph NUCLEO["NUCLEO-L432KC Board MVP"]
+        subgraph NRF["NRF24L01+ bit-bang SPI"]
+            P1["PA5 → SCK"]
+            P2["PB1 → MISO"]
+            P3["PA7 → MOSI"]
+            P4["PA4 → CSN"]
+            P5["PB0 → CE"]
+        end
+
+        subgraph PCA["PCA9685 I2C"]
+            P6["PB6 → SCL D5"]
+            P7["PB7 → SDA D4"]
+        end
+
+        subgraph ENC["Encoder 1"]
+            P15["PA0 → ENC1_A TIM2_CH1"]
+            P16["PA1 → ENC1_B TIM2_CH2"]
+        end
+
+        subgraph UART["Debug CLI LPUART1"]
+            P21["PA2 → VCP TX"]
+        end
+
+        subgraph SYS["System"]
+            P23["PB3 → LED LD3"]
+            P24["PA13 → SWDIO"]
+            P25["PA14 → SWCLK"]
+        end
+    end
+
+    subgraph Deferred["Deferred not MVP wiring"]
+        P8["PA3 RFID RX"]
+        P19["PB4 HX711 DOUT"]
+        P20["PB5 HX711 SCK"]
+        P17["PA11 ENC2_A"]
+        P18["PA12 ENC2_B"]
+    end

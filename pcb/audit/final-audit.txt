@@ -1,0 +1,17 @@
+PCB: /home/luceor/Desktop/wifeeder-v2/pcb/wifeeder-actuator.kicad_pcb
+  segments: 214  vias: 88  pads: 173
+  nets by segment count:
+    GND: 84
+    3V3: 41
+    5V: 24
+    12V_SAFE: 13
+    I2C_SCL: 5
+    I2C_SDA: 5
+    ENC_A: 4
+    ENC_B: 4
+    12V_IN: 3
+    NRF_CE: 3
+    NRF_CSN: 3
+    NRF_SCK: 3
+
+  signal pads not within 0.8 mm of routed trace: 0

@@ -1,0 +1,17 @@
+stateDiagram-v2
+    [*] --> TX_READY: Message queued
+
+    TX_READY --> SENDING: Write to NRF TX FIFO
+    SENDING --> TX_OK: Auto-ACK received
+    SENDING --> TX_FAIL: MAX_RT (max retries reached)
+
+    TX_OK --> [*]: Done
+
+    TX_FAIL --> FLUSH: FLUSH_TX
+    FLUSH --> RETRY_CHECK: Check retry count
+
+    RETRY_CHECK --> TX_READY: Retries < 3
+    RETRY_CHECK --> CONN_LOST: Retries >= 3
+
+    CONN_LOST --> RECONNECT: Mark connection lost
+    RECONNECT --> TX_READY: Wait 1s, try again
