@@ -1,5 +1,6 @@
 # Build / CMake
 build/
+build[0-9]/
 build_*/
 **/CMakeCache.txt
 **/CMakeFiles/
